@@ -23,6 +23,18 @@ class UserSeeder extends Seeder
                 'identity_number' => null,
                 'role' => 'admin',
             ],
+            [
+                'name' => 'Mahasiswa Testing',
+                'email' => 'mahasiswa@inventaris-unm.test',
+                'identity_number' => '23100001',
+                'role' => 'mahasiswa',
+            ],
+            [
+                'name' => 'Dosen Testing',
+                'email' => 'dosen@inventaris-unm.test',
+                'identity_number' => '198501012010011001',
+                'role' => 'dosen',
+            ],
         ];
 
         foreach ($users as $data) {

@@ -16,6 +16,9 @@ Route::middleware(['auth', 'role:mahasiswa'])
     ->name('mahasiswa.')
     ->group(function () {
         Route::view('/dashboard', 'dashboard')->name('dashboard');
+
+    Route::livewire('/pengambilan-bahan', 'pengambilan-bahan.create')
+        ->name('pengambilan-bahan.create');
     });
 
 // Area dosen
@@ -24,6 +27,9 @@ Route::middleware(['auth', 'role:dosen'])
     ->name('dosen.')
     ->group(function () {
         Route::view('/dashboard', 'dashboard')->name('dashboard');
+
+    Route::livewire('/pengambilan-bahan', 'pengambilan-bahan.create')
+        ->name('pengambilan-bahan.create');
     });
 
 // Area admin dan superadmin
@@ -32,6 +38,24 @@ Route::middleware(['auth', 'role:admin,superadmin'])
     ->name('admin.')
     ->group(function () {
         Route::view('/dashboard', 'dashboard')->name('dashboard');
+
+        Route::livewire('/bahan', 'admin.bahan.index')
+            ->name('bahan.index');
+
+        Route::livewire('/alat', 'admin.alat.index')
+            ->name('alat.index');
+
+        Route::livewire('/unit-alat', 'admin.unit-alat.index')
+            ->name('unit-alat.index');
+
+        Route::livewire('/laboratorium', 'admin.laboratorium.index')
+            ->name('laboratorium.index');
+
+        Route::livewire('/jadwal-laboratorium', 'admin.jadwal-laboratorium.index')
+            ->name('jadwal-laboratorium.index');
+
+        Route::livewire('/pengambilan-bahan', 'admin.pengambilan-bahan.index')
+            ->name('pengambilan-bahan.index');
     });
 
 // Area khusus superadmin
