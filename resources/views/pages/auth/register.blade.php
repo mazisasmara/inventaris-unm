@@ -30,6 +30,18 @@
                 placeholder="email@example.com"
             />
 
+
+            <!-- Identity Number -->
+            <flux:input
+                name="identity_number"
+                :label="__('NIM / NIP')"
+                :value="old('identity_number')"
+                type="text"
+                required
+                autocomplete="off"
+                placeholder="Masukkan NIM atau NIP"
+            />
+
             <!-- Password -->
             <flux:input
                 name="password"
