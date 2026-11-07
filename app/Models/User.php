@@ -61,4 +61,48 @@ class User extends Authenticatable
     {
         return $this->hasMany(PengambilanBahan::class, 'diproses_oleh');
     }
+
+    public function peminjamanAlat(): HasMany
+    {
+        return $this->hasMany(PeminjamanAlat::class, 'user_id');
+    }
+
+    public function peminjamanAlatDiproses(): HasMany
+    {
+        return $this->hasMany(PeminjamanAlat::class, 'diproses_oleh');
+    }
+
+    public function pengembalianAlatDiproses(): HasMany
+    {
+        return $this->hasMany(PengembalianAlat::class, 'diproses_oleh');
+    }
+
+    public function peminjamanLab(): HasMany
+    {
+        return $this->hasMany(PeminjamanLab::class, 'user_id');
+    }
+
+    public function peminjamanLabDiproses(): HasMany
+    {
+        return $this->hasMany(PeminjamanLab::class, 'diproses_oleh');
+    }
+
+    public function dokumentasiPeminjamanLabDiunggah(): HasMany
+    {
+        return $this->hasMany(DokumentasiPeminjamanLab::class, 'uploaded_by');
+    }
+
+    public function activityLogs(): HasMany
+    {
+        return $this->hasMany(ActivityLog::class, 'user_id');
+    }
+    
+    public function initials(): string
+    {
+        return collect(explode(' ', $this->name))
+            ->filter()
+            ->take(2)
+            ->map(fn ($word) => strtoupper(substr($word, 0, 1)))
+            ->implode('');
+    }
 }
