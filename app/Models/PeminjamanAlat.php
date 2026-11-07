@@ -15,6 +15,7 @@ class PeminjamanAlat extends Model
         'user_id',
         'diproses_oleh',
         'status',
+        'tujuan',
         'tanggal_pengajuan',
         'tanggal_peminjaman',
         'tanggal_pengembalian_rencana',

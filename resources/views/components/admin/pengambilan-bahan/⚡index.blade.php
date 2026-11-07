@@ -128,6 +128,34 @@ new class extends Component
     }
 
 
+    public function tandaiSelesai(int $id): void
+    {
+        DB::transaction(function () use ($id) {
+            $pengajuan = PengambilanBahan::lockForUpdate()
+                ->findOrFail($id);
+
+            if ($pengajuan->status !== 'disetujui') {
+                $this->approvalError = 'Hanya pengajuan yang sudah disetujui yang dapat diselesaikan.';
+                return;
+            }
+
+            $pengajuan->update([
+                'status' => 'selesai',
+                'selesai_at' => now(),
+            ]);
+        });
+
+        unset($this->pengajuan, $this->statistik);
+
+        if ($this->approvalError) {
+            return;
+        }
+
+        $this->tutupDetail();
+
+        $this->dispatch('toast', message: 'Pengambilan bahan berhasil diselesaikan.');
+    }
+
     public function tolak(int $id): void
     {
         $pengajuan = PengambilanBahan::findOrFail($id);
@@ -369,6 +397,17 @@ new class extends Component
                                 class="rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700"
                             >
                                 Setujui Pengajuan
+                            </button>
+                        </div>
+                    @elseif ($selected->status === 'disetujui')
+                        <div class="mt-6 flex justify-end">
+                            <button
+                                type="button"
+                                wire:click="tandaiSelesai({{ $selected->id }})"
+                                wire:confirm="Pastikan bahan sudah diserahkan kepada pemohon. Tandai selesai?"
+                                class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                            >
+                                Tandai Selesai
                             </button>
                         </div>
                     @endif

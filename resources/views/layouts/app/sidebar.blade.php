@@ -97,15 +97,25 @@
                             Pengambilan Bahan
                         </flux:sidebar.item>
 
-                        <flux:sidebar.item href="#">
+                        <flux:sidebar.item 
+                            :href="route('admin.peminjaman-alat.index')"
+                            :current="request()->routeIs('admin.peminjaman-alat.*')"
+                            wire:navigate
+                        >
                             Peminjaman Alat
                         </flux:sidebar.item>
 
-                        <flux:sidebar.item href="#">
+                        <flux:sidebar.item 
+                            :href="route('admin.peminjaman-lab.index')"
+                            :current="request()->routeIs('admin.peminjaman-lab.index')"
+                        >
                             Peminjaman Lab
                         </flux:sidebar.item>
 
-                        <flux:sidebar.item href="#">
+                        <flux:sidebar.item
+                            :href="route('admin.pengembalian-alat.index')"
+                            :current="request()->routeIs('admin.pengembalian-alat.index')"
+                        >
                             Pengembalian Alat
                         </flux:sidebar.item>
 
@@ -144,12 +154,19 @@
                             </flux:sidebar.item>
                         @endif
 
-                        <flux:sidebar.item href="#">
+                        <flux:sidebar.item
+                            icon="wrench"
+                            :href="route(auth()->user()->role . '.peminjaman-alat.create')"
+                            :current="request()->routeIs('*.peminjaman-alat.create')"
+                        >
                             Peminjaman Alat
                         </flux:sidebar.item>
 
-                        <flux:sidebar.item href="#">
-                            Peminjaman Lab
+                        <flux:sidebar.item
+                            :href="route(auth()->user()->role . '.peminjaman-lab.create')"
+                            :current="request()->routeIs('*.peminjaman-lab.create')"
+                        >
+                            Peminjaman Laboratorium
                         </flux:sidebar.item>
 
                     </flux:sidebar.group>

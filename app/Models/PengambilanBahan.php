@@ -49,4 +49,12 @@ class PengambilanBahan extends Model
             'pengambilan_bahan_id'
         );
     }
+
+    public function pengembalian(): HasMany
+    {
+        return $this->hasMany(
+            PengembalianBahan::class,
+            'pengambilan_bahan_id'
+        );
+    }
 }

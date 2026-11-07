@@ -19,6 +19,12 @@ Route::middleware(['auth', 'role:mahasiswa'])
 
     Route::livewire('/pengambilan-bahan', 'pengambilan-bahan.create')
         ->name('pengambilan-bahan.create');
+
+    Route::livewire('/peminjaman-alat', 'peminjaman-alat.create')
+        ->name('peminjaman-alat.create');
+
+    Route::livewire('/peminjaman-lab', 'peminjaman-lab.create')
+        ->name('peminjaman-lab.create');
     });
 
 // Area dosen
@@ -30,6 +36,12 @@ Route::middleware(['auth', 'role:dosen'])
 
     Route::livewire('/pengambilan-bahan', 'pengambilan-bahan.create')
         ->name('pengambilan-bahan.create');
+
+    Route::livewire('/peminjaman-alat', 'peminjaman-alat.create')
+        ->name('peminjaman-alat.create');
+
+    Route::livewire('/peminjaman-lab', 'peminjaman-lab.create')
+        ->name('peminjaman-lab.create');
     });
 
 // Area admin dan superadmin
@@ -56,6 +68,15 @@ Route::middleware(['auth', 'role:admin,superadmin'])
 
         Route::livewire('/pengambilan-bahan', 'admin.pengambilan-bahan.index')
             ->name('pengambilan-bahan.index');
+
+        Route::livewire('/peminjaman-alat', 'admin.peminjaman-alat.index')
+            ->name('peminjaman-alat.index');
+
+        Route::livewire('/pengembalian-alat', 'admin.pengembalian-alat.index')
+            ->name('pengembalian-alat.index');
+
+        Route::livewire('/peminjaman-lab', 'admin.peminjaman-lab.index')
+            ->name('peminjaman-lab.index');
     });
 
 // Area khusus superadmin
