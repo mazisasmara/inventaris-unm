@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
+use Livewire\Attributes\Url;
 
 new class extends Component
 {
@@ -116,6 +117,17 @@ new class extends Component
             'Pengajuan pengambilan bahan berhasil dikirim dan sedang menunggu persetujuan admin.'
         );
     }
+
+    #[Url(as: 'bahan')]
+    public ?int $bahanId = null;
+
+    public function mount(): void
+    {
+        if ($this->bahanId) {
+            $this->items[0]['bahan_id'] = (string) $this->bahanId;
+        }
+    }
+
 };
 ?>
 

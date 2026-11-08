@@ -9,19 +9,39 @@
 
         @php
             $user = auth()->user();
-            $role = $user->role;
-            $isAdmin = in_array($role, ['admin', 'superadmin']);
+            $role = $user?->role;
+
+            $isGuest = $user === null;
+            $isAdmin = in_array($role, ['admin', 'superadmin'], true);
             $isSuperadmin = $role === 'superadmin';
+            $isMahasiswa = $role === 'mahasiswa';
+            $isDosen = $role === 'dosen';
+
+            $dashboardRoute = match ($role) {
+                'mahasiswa' => 'mahasiswa.dashboard',
+                'dosen' => 'dosen.dashboard',
+                'admin' => 'admin.dashboard',
+                'superadmin' => 'superadmin.dashboard',
+                default => null,
+            };
+
+            $layananRoutePrefix = $isAdmin ? 'admin.' : ($role ? $role . '.' : null);
         @endphp
 
         {{-- SIDEBAR --}}
-        <flux:sidebar sticky collapsible="mobile"
-            class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+        <flux:sidebar
+            sticky
+            collapsible="mobile"
+            class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900"
+        >
 
+            {{-- HEADER SIDEBAR --}}
             <flux:sidebar.header>
-                <x-app-logo :sidebar="true"
-                    href="{{ route('dashboard') }}"
-                    wire:navigate />
+                <x-app-logo
+                    :sidebar="true"
+                    :href="route('home')"
+                    wire:navigate
+                />
 
                 <flux:sidebar.collapse class="lg:hidden" />
             </flux:sidebar.header>
@@ -33,20 +53,97 @@
 
                     <flux:sidebar.item
                         icon="home"
-                        :href="$isAdmin ? route('admin.dashboard') : route('dashboard')"
-                        :current="request()->routeIs('dashboard', 'admin.dashboard')"
-                        wire:navigate>
-                        Dashboard
+                        :href="route('home')"
+                        :current="request()->routeIs('home')"
+                        wire:navigate
+                    >
+                        Beranda
+                    </flux:sidebar.item>
+
+                    @if ($user)
+                        <flux:sidebar.item
+                            icon="layout-dashboard"
+                            :href="route($dashboardRoute)"
+                            :current="request()->routeIs(
+                                'dashboard',
+                                'mahasiswa.dashboard',
+                                'dosen.dashboard',
+                                'admin.dashboard',
+                                'superadmin.dashboard'
+                            )"
+                            wire:navigate
+                        >
+                            Dashboard
+                        </flux:sidebar.item>
+                    @endif
+
+                    <flux:sidebar.item
+                        icon="package-search"
+                        :href="route('inventaris.index')"
+                        :current="request()->routeIs('inventaris.*')"
+                        wire:navigate
+                    >
+                        Katalog Inventaris
                     </flux:sidebar.item>
 
                 </flux:sidebar.group>
 
+                {{-- MENU MAHASISWA DAN DOSEN --}}
+                @if ($isMahasiswa || $isDosen)
+
+                    <flux:sidebar.group heading="Layanan" class="grid">
+
+                        <flux:sidebar.item
+                            icon="flask-conical"
+                            :href="route($role . '.pengambilan-bahan.create')"
+                            :current="request()->routeIs($role . '.pengambilan-bahan.*')"
+                            wire:navigate
+                        >
+                            Pengambilan Bahan
+                        </flux:sidebar.item>
+
+                        <flux:sidebar.item
+                            icon="wrench"
+                            :href="route($role . '.peminjaman-alat.create')"
+                            :current="request()->routeIs($role . '.peminjaman-alat.*')"
+                            wire:navigate
+                        >
+                            Peminjaman Alat
+                        </flux:sidebar.item>
+
+                        <flux:sidebar.item
+                            icon="building"
+                            :href="route($role . '.peminjaman-lab.create')"
+                            :current="request()->routeIs($role . '.peminjaman-lab.*')"
+                            wire:navigate
+                        >
+                            Peminjaman Laboratorium
+                        </flux:sidebar.item>
+
+                    </flux:sidebar.group>
+
+                    <flux:sidebar.group heading="Aktivitas Saya" class="grid">
+
+                        <flux:sidebar.item
+                            icon="clock"
+                            :href="route($role . '.riwayat-transaksi.index')"
+                            :current="request()->routeIs($role . '.riwayat-transaksi.*')"
+                            wire:navigate
+                        >
+                            Riwayat Saya
+                        </flux:sidebar.item>
+
+                    </flux:sidebar.group>
+
+                @endif
+
+                {{-- MENU ADMIN DAN SUPERADMIN --}}
                 @if ($isAdmin)
 
-                    {{-- MENU ADMIN --}}
                     <flux:sidebar.group heading="Manajemen Inventaris" class="grid">
 
                         <flux:sidebar.item
+                            icon="flask-conical"
                             :href="route('admin.bahan.index')"
                             :current="request()->routeIs('admin.bahan.*')"
                             wire:navigate
@@ -55,6 +152,7 @@
                         </flux:sidebar.item>
 
                         <flux:sidebar.item
+                            icon="wrench"
                             :href="route('admin.alat.index')"
                             :current="request()->routeIs('admin.alat.*')"
                             wire:navigate
@@ -63,6 +161,7 @@
                         </flux:sidebar.item>
 
                         <flux:sidebar.item
+                            icon="boxes"
                             :href="route('admin.unit-alat.index')"
                             :current="request()->routeIs('admin.unit-alat.*')"
                             wire:navigate
@@ -71,6 +170,7 @@
                         </flux:sidebar.item>
 
                         <flux:sidebar.item
+                            icon="building"
                             :href="route('admin.laboratorium.index')"
                             :current="request()->routeIs('admin.laboratorium.*')"
                             wire:navigate
@@ -79,6 +179,7 @@
                         </flux:sidebar.item>
 
                         <flux:sidebar.item
+                            icon="calendar-days"
                             :href="route('admin.jadwal-laboratorium.index')"
                             :current="request()->routeIs('admin.jadwal-laboratorium.*')"
                             wire:navigate
@@ -91,13 +192,16 @@
                     <flux:sidebar.group heading="Transaksi" class="grid">
 
                         <flux:sidebar.item
+                            icon="clipboard-list"
                             :href="route('admin.pengambilan-bahan.index')"
                             :current="request()->routeIs('admin.pengambilan-bahan.*')"
-                            wire:navigate>
+                            wire:navigate
+                        >
                             Pengambilan Bahan
                         </flux:sidebar.item>
 
-                        <flux:sidebar.item 
+                        <flux:sidebar.item
+                            icon="package"
                             :href="route('admin.peminjaman-alat.index')"
                             :current="request()->routeIs('admin.peminjaman-alat.*')"
                             wire:navigate
@@ -105,23 +209,29 @@
                             Peminjaman Alat
                         </flux:sidebar.item>
 
-                        <flux:sidebar.item 
+                        <flux:sidebar.item
+                            icon="building"
                             :href="route('admin.peminjaman-lab.index')"
-                            :current="request()->routeIs('admin.peminjaman-lab.index')"
+                            :current="request()->routeIs('admin.peminjaman-lab.*')"
+                            wire:navigate
                         >
-                            Peminjaman Lab
+                            Peminjaman Laboratorium
                         </flux:sidebar.item>
 
                         <flux:sidebar.item
+                            icon="package-check"
                             :href="route('admin.pengembalian-bahan.index')"
-                            :current="request()->routeIs('admin.pengembalian-bahan.index')"
+                            :current="request()->routeIs('admin.pengembalian-bahan.*')"
+                            wire:navigate
                         >
                             Pengembalian Bahan
                         </flux:sidebar.item>
 
                         <flux:sidebar.item
+                            icon="undo-2"
                             :href="route('admin.pengembalian-alat.index')"
-                            :current="request()->routeIs('admin.pengembalian-alat.index')"
+                            :current="request()->routeIs('admin.pengembalian-alat.*')"
+                            wire:navigate
                         >
                             Pengembalian Alat
                         </flux:sidebar.item>
@@ -132,14 +242,16 @@
 
                         @if ($role === 'admin')
                             <flux:sidebar.item
+                                icon="clock"
                                 :href="route('admin.riwayat-transaksi.index')"
                                 :current="request()->routeIs('admin.riwayat-transaksi.*')"
                                 wire:navigate
                             >
                                 Riwayat Transaksi
                             </flux:sidebar.item>
-                        @elseif ($role === 'superadmin')
+                        @elseif ($isSuperadmin)
                             <flux:sidebar.item
+                                icon="clock"
                                 :href="route('superadmin.riwayat-transaksi.index')"
                                 :current="request()->routeIs('superadmin.riwayat-transaksi.*')"
                                 wire:navigate
@@ -150,98 +262,30 @@
 
                     </flux:sidebar.group>
 
-                @else
-
-                    {{-- MENU MAHASISWA DAN DOSEN --}}
-                    <flux:sidebar.group heading="Layanan" class="grid">
-
-                        <flux:sidebar.item href="#">
-                            Lihat Inventaris
-                        </flux:sidebar.item>
-
-                        @if ($role === 'mahasiswa')
-                            <flux:sidebar.item
-                                :href="route('mahasiswa.pengambilan-bahan.create')"
-                                :current="request()->routeIs('mahasiswa.pengambilan-bahan.*')"
-                                wire:navigate>
-                                Pengambilan Bahan
-                            </flux:sidebar.item>
-                        @elseif ($role === 'dosen')
-                            <flux:sidebar.item
-                                :href="route('dosen.pengambilan-bahan.create')"
-                                :current="request()->routeIs('dosen.pengambilan-bahan.*')"
-                                wire:navigate>
-                                Pengambilan Bahan
-                            </flux:sidebar.item>
-                        @endif
-
-                        <flux:sidebar.item
-                            icon="wrench"
-                            :href="route(auth()->user()->role . '.peminjaman-alat.create')"
-                            :current="request()->routeIs('*.peminjaman-alat.create')"
-                        >
-                            Peminjaman Alat
-                        </flux:sidebar.item>
-
-                        <flux:sidebar.item
-                            :href="route(auth()->user()->role . '.peminjaman-lab.create')"
-                            :current="request()->routeIs('*.peminjaman-lab.create')"
-                        >
-                            Peminjaman Laboratorium
-                        </flux:sidebar.item>
-
-                    </flux:sidebar.group>
-
-                    <flux:sidebar.group heading="Aktivitas Saya" class="grid">
-
-                        @if ($role === 'mahasiswa')
-                            <flux:sidebar.item
-                                :href="route('mahasiswa.riwayat-transaksi.index')"
-                                :current="request()->routeIs('mahasiswa.riwayat-transaksi.*')"
-                                wire:navigate
-                            >
-                                Riwayat Saya
-                            </flux:sidebar.item>
-                        @elseif ($role === 'dosen')
-                            <flux:sidebar.item
-                                :href="route('dosen.riwayat-transaksi.index')"
-                                :current="request()->routeIs('dosen.riwayat-transaksi.*')"
-                                wire:navigate
-                            >
-                                Riwayat Saya
-                            </flux:sidebar.item>
-                        @endif
-
-                    </flux:sidebar.group>
-
-                @endif
-
-                @if ($isSuperadmin)
-
-                    {{-- MENU KHUSUS SUPERADMIN --}}
-                    <flux:sidebar.group heading="Administrasi Sistem" class="grid">
-
-                        <flux:sidebar.item href="#">
-                            Manajemen Pengguna
-                        </flux:sidebar.item>
-
-                        <flux:sidebar.item href="#">
-                            Activity Log
-                        </flux:sidebar.item>
-
-                    </flux:sidebar.group>
-
                 @endif
 
             </flux:sidebar.nav>
 
             <flux:spacer />
 
-            {{-- PROFIL PENGGUNA --}}
-            <x-desktop-user-menu
-                class="hidden lg:block"
-                :name="$user->name"
-            />
+            {{-- BAGIAN BAWAH SIDEBAR --}}
+            @auth
+                <x-desktop-user-menu
+                    class="hidden lg:block"
+                    :name="$user->name"
+                />
+            @else
+                <div class="hidden lg:block p-2">
+                    <flux:button
+                        href="{{ route('login') }}"
+                        variant="primary"
+                        class="w-full"
+                        icon="log-in"
+                    >
+                        Masuk
+                    </flux:button>
+                </div>
+            @endauth
 
         </flux:sidebar>
 
@@ -255,66 +299,78 @@
 
             <flux:spacer />
 
-            <flux:dropdown position="top" align="end">
+            @auth
+                <flux:dropdown position="top" align="end">
 
-                <flux:profile
-                    :initials="$user->initials()"
-                    icon-trailing="chevron-down"
-                />
+                    <flux:profile
+                        :initials="$user->initials()"
+                        icon-trailing="chevron-down"
+                    />
 
-                <flux:menu>
+                    <flux:menu>
 
-                    <flux:menu.radio.group>
-                        <div class="p-2 text-sm">
-                            <div class="flex items-center gap-2">
-                                <flux:avatar
-                                    :name="$user->name"
-                                    :initials="$user->initials()"
-                                />
+                        <flux:menu.radio.group>
+                            <div class="p-2 text-sm">
+                                <div class="flex items-center gap-2">
 
-                                <div class="min-w-0">
-                                    <flux:heading class="truncate">
-                                        {{ $user->name }}
-                                    </flux:heading>
+                                    <flux:avatar
+                                        :name="$user->name"
+                                        :initials="$user->initials()"
+                                    />
 
-                                    <flux:text class="truncate">
-                                        {{ $user->email }}
-                                    </flux:text>
+                                    <div class="min-w-0">
+                                        <flux:heading class="truncate">
+                                            {{ $user->name }}
+                                        </flux:heading>
+
+                                        <flux:text class="truncate">
+                                            {{ $user->email }}
+                                        </flux:text>
+                                    </div>
+
                                 </div>
                             </div>
-                        </div>
-                    </flux:menu.radio.group>
+                        </flux:menu.radio.group>
 
-                    <flux:menu.separator />
-
-                    <flux:menu.item
-                        :href="route('profile.edit')"
-                        wire:navigate>
-                        Pengaturan
-                    </flux:menu.item>
-
-                    <flux:menu.separator />
-
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
+                        <flux:menu.separator />
 
                         <flux:menu.item
-                            as="button"
-                            type="submit"
-                            class="w-full cursor-pointer">
-                            Keluar
+                            :href="route('profile.edit')"
+                            wire:navigate
+                        >
+                            Pengaturan
                         </flux:menu.item>
-                    </form>
 
-                </flux:menu>
-            </flux:dropdown>
+                        <flux:menu.separator />
+
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+
+                            <flux:menu.item
+                                as="button"
+                                type="submit"
+                                class="w-full cursor-pointer"
+                            >
+                                Keluar
+                            </flux:menu.item>
+                        </form>
+
+                    </flux:menu>
+                </flux:dropdown>
+            @else
+                <flux:button
+                    href="{{ route('login') }}"
+                    size="sm"
+                    variant="primary"
+                >
+                    Masuk
+                </flux:button>
+            @endauth
 
         </flux:header>
 
         {{-- KONTEN HALAMAN --}}
         {{ $slot }}
-
-        {{-- FOOTER DIPINDAHKAN KE APP.BLADE.PHP --}}
 
         @persist('toast')
             <flux:toast.group>

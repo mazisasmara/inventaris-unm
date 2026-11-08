@@ -2,8 +2,37 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\InventarisController;
 
 Route::view('/', 'welcome')->name('home');
+
+// Katalog inventaris publik
+Route::prefix('inventaris')
+    ->name('inventaris.')
+    ->controller(InventarisController::class)
+    ->group(function () {
+        Route::get('/', 'index')->name('index');
+
+        Route::get('/alat/{alat}', 'showAlat')
+            ->name('alat.show');
+
+        Route::get('/bahan/{bahan}', 'showBahan')
+            ->name('bahan.show');
+
+        Route::get('/laboratorium/{laboratorium}', 'showLaboratorium')
+            ->name('laboratorium.show');
+
+        Route::middleware('auth')->group(function () {
+            Route::get('/alat/{alat}/ajukan', 'ajukanAlat')
+                ->name('ajukan.alat');
+
+            Route::get('/bahan/{bahan}/ajukan', 'ajukanBahan')
+                ->name('ajukan.bahan');
+
+            Route::get('/laboratorium/{laboratorium}/ajukan', 'ajukanLaboratorium')
+                ->name('ajukan.laboratorium');
+        });
+    });
 
 // Dashboard bawaan Laravel
 Route::middleware(['auth', 'verified'])->group(function () {

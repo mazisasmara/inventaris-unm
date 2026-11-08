@@ -11,6 +11,7 @@ use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Url;
 
 new class extends Component
 {
@@ -187,6 +188,17 @@ new class extends Component
 
         unset($this->jadwalLab);
     }
+
+    #[Url(as: 'laboratorium')]
+    public ?int $laboratoriumId = null;
+
+    public function mount(): void
+    {
+        if ($this->laboratoriumId) {
+            $this->laboratorium_id = (string) $this->laboratoriumId;
+        }
+    }
+
 };
 ?>
 

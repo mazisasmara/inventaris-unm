@@ -5,6 +5,7 @@ use App\Models\PeminjamanAlat;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
+use Livewire\Attributes\Url;
 
 new class extends Component
 {
@@ -147,6 +148,17 @@ new class extends Component
 
         session()->flash('success', 'Pengajuan peminjaman alat berhasil dikirim dan menunggu persetujuan admin.');
     }
+
+    #[Url(as: 'alat')]
+    public ?int $alatId = null;
+
+    public function mount(): void
+    {
+        if ($this->alatId) {
+            $this->items[0]['alat_id'] = (string) $this->alatId;
+        }
+    }
+
 };
 ?>
 
