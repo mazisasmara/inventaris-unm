@@ -1,3 +1,15 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Inventaris Laboratorium UNM</title>
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body>
+
 <main class="min-h-screen bg-zinc-900 px-6 py-10 text-zinc-100 antialiased lg:px-10">
     <div class="mx-auto max-w-7xl">
         <div class="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
@@ -190,3 +202,4 @@
         © {{ date('Y') }} Inventaris Laboratorium UNM.
     </footer>
 </main>
+</body>

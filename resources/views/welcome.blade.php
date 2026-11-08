@@ -1,3 +1,14 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Inventaris Laboratorium UNM</title>
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body>
     <main class="min-h-screen bg-zinc-900 text-zinc-100 antialiased">
         {{-- HERO --}}
         <section class="relative isolate overflow-hidden border-b border-white/10">
@@ -150,3 +161,5 @@
             </div>
         </footer>
     </main>
+
+</body>
