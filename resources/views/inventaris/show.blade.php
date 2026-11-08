@@ -1,4 +1,4 @@
-<x-layouts.app.sidebar>
+
     <main class="min-h-screen bg-zinc-900 px-6 py-10 text-zinc-100 antialiased lg:px-10">
         <div class="mx-auto max-w-6xl">
             <a href="{{ route('inventaris.index', ['kategori' => $jenis]) }}"
@@ -226,4 +226,3 @@
             </footer>
         </div>
     </main>
-</x-layouts.app.sidebar>
