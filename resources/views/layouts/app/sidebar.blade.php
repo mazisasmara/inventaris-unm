@@ -113,6 +113,13 @@
                         </flux:sidebar.item>
 
                         <flux:sidebar.item
+                            :href="route('admin.pengembalian-bahan.index')"
+                            :current="request()->routeIs('admin.pengembalian-bahan.index')"
+                        >
+                            Pengembalian Bahan
+                        </flux:sidebar.item>
+
+                        <flux:sidebar.item
                             :href="route('admin.pengembalian-alat.index')"
                             :current="request()->routeIs('admin.pengembalian-alat.index')"
                         >
@@ -123,9 +130,23 @@
 
                     <flux:sidebar.group heading="Laporan" class="grid">
 
-                        <flux:sidebar.item href="#">
-                            Riwayat Transaksi
-                        </flux:sidebar.item>
+                        @if ($role === 'admin')
+                            <flux:sidebar.item
+                                :href="route('admin.riwayat-transaksi.index')"
+                                :current="request()->routeIs('admin.riwayat-transaksi.*')"
+                                wire:navigate
+                            >
+                                Riwayat Transaksi
+                            </flux:sidebar.item>
+                        @elseif ($role === 'superadmin')
+                            <flux:sidebar.item
+                                :href="route('superadmin.riwayat-transaksi.index')"
+                                :current="request()->routeIs('superadmin.riwayat-transaksi.*')"
+                                wire:navigate
+                            >
+                                Riwayat Transaksi
+                            </flux:sidebar.item>
+                        @endif
 
                     </flux:sidebar.group>
 
@@ -173,9 +194,23 @@
 
                     <flux:sidebar.group heading="Aktivitas Saya" class="grid">
 
-                        <flux:sidebar.item href="#">
-                            Riwayat Saya
-                        </flux:sidebar.item>
+                        @if ($role === 'mahasiswa')
+                            <flux:sidebar.item
+                                :href="route('mahasiswa.riwayat-transaksi.index')"
+                                :current="request()->routeIs('mahasiswa.riwayat-transaksi.*')"
+                                wire:navigate
+                            >
+                                Riwayat Saya
+                            </flux:sidebar.item>
+                        @elseif ($role === 'dosen')
+                            <flux:sidebar.item
+                                :href="route('dosen.riwayat-transaksi.index')"
+                                :current="request()->routeIs('dosen.riwayat-transaksi.*')"
+                                wire:navigate
+                            >
+                                Riwayat Saya
+                            </flux:sidebar.item>
+                        @endif
 
                     </flux:sidebar.group>
 

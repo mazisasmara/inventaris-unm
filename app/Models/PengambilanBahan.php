@@ -17,6 +17,7 @@ class PengambilanBahan extends Model
         'status',
         'tanggal_pengajuan',
         'diproses_at',
+        'diserahkan_at',
         'selesai_at',
         'dibatalkan_at',
         'catatan_admin',
@@ -27,6 +28,7 @@ class PengambilanBahan extends Model
         return [
             'tanggal_pengajuan' => 'datetime',
             'diproses_at' => 'datetime',
+            'diserahkan_at' => 'datetime',
             'selesai_at' => 'datetime',
             'dibatalkan_at' => 'datetime',
         ];

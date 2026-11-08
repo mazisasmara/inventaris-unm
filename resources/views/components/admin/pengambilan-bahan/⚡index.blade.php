@@ -55,6 +55,7 @@ new class extends Component
         return [
             'menunggu' => PengambilanBahan::where('status', 'menunggu')->count(),
             'disetujui' => PengambilanBahan::where('status', 'disetujui')->count(),
+            'diserahkan' => PengambilanBahan::where('status', 'diserahkan')->count(),
             'ditolak' => PengambilanBahan::where('status', 'ditolak')->count(),
             'selesai' => PengambilanBahan::where('status', 'selesai')->count(),
         ];
@@ -128,32 +129,36 @@ new class extends Component
     }
 
 
-    public function tandaiSelesai(int $id): void
+    public function tandaiDiserahkan(int $id): void
     {
-        DB::transaction(function () use ($id) {
+        $this->approvalError = null;
+
+        $berhasil = DB::transaction(function () use ($id) {
             $pengajuan = PengambilanBahan::lockForUpdate()
                 ->findOrFail($id);
 
             if ($pengajuan->status !== 'disetujui') {
-                $this->approvalError = 'Hanya pengajuan yang sudah disetujui yang dapat diselesaikan.';
-                return;
+                $this->approvalError = 'Hanya pengajuan yang sudah disetujui yang dapat diserahkan.';
+                return false;
             }
 
             $pengajuan->update([
-                'status' => 'selesai',
-                'selesai_at' => now(),
+                'status' => 'diserahkan',
+                'diserahkan_at' => now(),
             ]);
+
+            return true;
         });
 
         unset($this->pengajuan, $this->statistik);
 
-        if ($this->approvalError) {
+        if (! $berhasil) {
             return;
         }
 
         $this->tutupDetail();
 
-        $this->dispatch('toast', message: 'Pengambilan bahan berhasil diselesaikan.');
+        $this->dispatch('toast', message: 'Bahan berhasil ditandai telah diserahkan.');
     }
 
     public function tolak(int $id): void
@@ -217,6 +222,7 @@ new class extends Component
                 <option value="semua">Semua Status</option>
                 <option value="menunggu">Menunggu</option>
                 <option value="disetujui">Disetujui</option>
+                <option value="diserahkan">Diserahkan</option>
                 <option value="ditolak">Ditolak</option>
                 <option value="selesai">Selesai</option>
             </select>
@@ -269,8 +275,10 @@ new class extends Component
                                 <span class="inline-flex rounded-full px-2.5 py-1 text-xs font-medium
                                     {{ $item->status === 'menunggu' ? 'bg-amber-100 text-amber-700' : '' }}
                                     {{ $item->status === 'disetujui' ? 'bg-green-100 text-green-700' : '' }}
+                                    {{ $item->status === 'diserahkan' ? 'bg-indigo-100 text-indigo-700' : '' }}
                                     {{ $item->status === 'ditolak' ? 'bg-red-100 text-red-700' : '' }}
-                                    {{ $item->status === 'selesai' ? 'bg-blue-100 text-blue-700' : '' }}">
+                                    {{ $item->status === 'selesai' ? 'bg-blue-100 text-blue-700' : '' }}"
+                                    >
                                     {{ ucfirst($item->status) }}
                                 </span>
                             </td>
@@ -403,11 +411,11 @@ new class extends Component
                         <div class="mt-6 flex justify-end">
                             <button
                                 type="button"
-                                wire:click="tandaiSelesai({{ $selected->id }})"
-                                wire:confirm="Pastikan bahan sudah diserahkan kepada pemohon. Tandai selesai?"
-                                class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                                wire:click="tandaiDiserahkan({{ $selected->id }})"
+                                wire:confirm="Pastikan bahan sudah diserahkan kepada pemohon. Lanjutkan?"
+                                class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
                             >
-                                Tandai Selesai
+                                Tandai Diserahkan
                             </button>
                         </div>
                     @endif
