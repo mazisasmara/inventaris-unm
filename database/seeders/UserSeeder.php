@@ -13,25 +13,25 @@ class UserSeeder extends Seeder
         $users = [
             [
                 'name' => 'Super Administrator',
-                'email' => 'superadmin@inventaris-unm.test',
+                'email' => 'superadmin@test',
                 'identity_number' => null,
                 'role' => 'superadmin',
             ],
             [
                 'name' => 'Administrator Lab',
-                'email' => 'admin@inventaris-unm.test',
+                'email' => 'admin@test',
                 'identity_number' => null,
                 'role' => 'admin',
             ],
             [
                 'name' => 'Mahasiswa Testing',
-                'email' => 'mahasiswa@inventaris-unm.test',
+                'email' => 'mahasiswa@test',
                 'identity_number' => '23100001',
                 'role' => 'mahasiswa',
             ],
             [
                 'name' => 'Dosen Testing',
-                'email' => 'dosen@inventaris-unm.test',
+                'email' => 'dosen@test',
                 'identity_number' => '198501012010011001',
                 'role' => 'dosen',
             ],
@@ -48,7 +48,7 @@ class UserSeeder extends Seeder
             $user->is_active = true;
 
             if (! $user->exists) {
-                $user->password = Hash::make('password');
+                $user->password = Hash::make('Password');
             }
 
             $user->save();
