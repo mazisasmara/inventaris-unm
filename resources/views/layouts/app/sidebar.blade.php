@@ -32,7 +32,7 @@
         <flux:sidebar
             sticky
             collapsible="mobile"
-            class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900"
+            class="border-e border-white/10! bg-navy! text-white!"
         >
 
             {{-- HEADER SIDEBAR --}}
@@ -49,13 +49,14 @@
             <flux:sidebar.nav>
 
                 {{-- MENU UTAMA --}}
-                <flux:sidebar.group heading="Menu Utama" class="grid">
+                <flux:sidebar.group heading="Menu Utama" class="grid text-white!">
 
                     <flux:sidebar.item
                         icon="home"
                         :href="route('home')"
                         :current="request()->routeIs('home')"
                         wire:navigate
+                        class="text-white!"
                     >
                         Beranda
                     </flux:sidebar.item>
@@ -71,6 +72,7 @@
                                 'admin.dashboard',
                                 'superadmin.dashboard'
                             )"
+                            class="text-white!"
                             wire:navigate
                         >
                             Dashboard
@@ -81,6 +83,7 @@
                         icon="package-search"
                         :href="route('inventaris.index')"
                         :current="request()->routeIs('inventaris.*')"
+                        class="text-white!"
                         wire:navigate
                     >
                         Katalog Inventaris
@@ -97,6 +100,7 @@
                             icon="flask-conical"
                             :href="route($role . '.pengambilan-bahan.create')"
                             :current="request()->routeIs($role . '.pengambilan-bahan.*')"
+                            class="text-white!"
                             wire:navigate
                         >
                             Pengambilan Bahan
@@ -106,6 +110,7 @@
                             icon="wrench"
                             :href="route($role . '.peminjaman-alat.create')"
                             :current="request()->routeIs($role . '.peminjaman-alat.*')"
+                            class="text-white!"
                             wire:navigate
                         >
                             Peminjaman Alat
@@ -115,6 +120,7 @@
                             icon="building"
                             :href="route($role . '.peminjaman-lab.create')"
                             :current="request()->routeIs($role . '.peminjaman-lab.*')"
+                            class="text-white!"
                             wire:navigate
                         >
                             Peminjaman Laboratorium
@@ -128,6 +134,7 @@
                             icon="clock"
                             :href="route($role . '.riwayat-transaksi.index')"
                             :current="request()->routeIs($role . '.riwayat-transaksi.*')"
+                            class="text-white!"
                             wire:navigate
                         >
                             Riwayat Saya
@@ -146,6 +153,7 @@
                             icon="flask-conical"
                             :href="route('admin.bahan.index')"
                             :current="request()->routeIs('admin.bahan.*')"
+                            class="text-white!"
                             wire:navigate
                         >
                             Data Bahan
@@ -155,6 +163,7 @@
                             icon="wrench"
                             :href="route('admin.alat.index')"
                             :current="request()->routeIs('admin.alat.*')"
+                            class="text-white!"
                             wire:navigate
                         >
                             Data Alat
@@ -164,6 +173,7 @@
                             icon="boxes"
                             :href="route('admin.unit-alat.index')"
                             :current="request()->routeIs('admin.unit-alat.*')"
+                            class="text-white!"
                             wire:navigate
                         >
                             Unit Inventaris
@@ -173,6 +183,7 @@
                             icon="building"
                             :href="route('admin.laboratorium.index')"
                             :current="request()->routeIs('admin.laboratorium.*')"
+                            class="text-white!"
                             wire:navigate
                         >
                             Laboratorium
@@ -182,6 +193,7 @@
                             icon="calendar-days"
                             :href="route('admin.jadwal-laboratorium.index')"
                             :current="request()->routeIs('admin.jadwal-laboratorium.*')"
+                            class="text-white!"
                             wire:navigate
                         >
                             Jadwal Laboratorium
@@ -195,6 +207,7 @@
                             icon="clipboard-list"
                             :href="route('admin.pengambilan-bahan.index')"
                             :current="request()->routeIs('admin.pengambilan-bahan.*')"
+                            class="text-white!"
                             wire:navigate
                         >
                             Pengambilan Bahan
@@ -204,6 +217,7 @@
                             icon="package"
                             :href="route('admin.peminjaman-alat.index')"
                             :current="request()->routeIs('admin.peminjaman-alat.*')"
+                            class="text-white!"
                             wire:navigate
                         >
                             Peminjaman Alat
@@ -213,6 +227,7 @@
                             icon="building"
                             :href="route('admin.peminjaman-lab.index')"
                             :current="request()->routeIs('admin.peminjaman-lab.*')"
+                            class="text-white!"
                             wire:navigate
                         >
                             Peminjaman Laboratorium
@@ -222,6 +237,7 @@
                             icon="package-check"
                             :href="route('admin.pengembalian-bahan.index')"
                             :current="request()->routeIs('admin.pengembalian-bahan.*')"
+                            class="text-white!"
                             wire:navigate
                         >
                             Pengembalian Bahan
@@ -231,6 +247,7 @@
                             icon="undo-2"
                             :href="route('admin.pengembalian-alat.index')"
                             :current="request()->routeIs('admin.pengembalian-alat.*')"
+                            class="text-white!"
                             wire:navigate
                         >
                             Pengembalian Alat
@@ -245,6 +262,7 @@
                                 icon="clock"
                                 :href="route('admin.riwayat-transaksi.index')"
                                 :current="request()->routeIs('admin.riwayat-transaksi.*')"
+                                class="text-white!"
                                 wire:navigate
                             >
                                 Riwayat Transaksi
@@ -254,6 +272,7 @@
                                 icon="clock"
                                 :href="route('superadmin.riwayat-transaksi.index')"
                                 :current="request()->routeIs('superadmin.riwayat-transaksi.*')"
+                                class="text-white!"
                                 wire:navigate
                             >
                                 Riwayat Transaksi
@@ -290,10 +309,11 @@
         </flux:sidebar>
 
         {{-- HEADER MOBILE --}}
-        <flux:header class="lg:hidden">
+        <flux:header class="lg:hidden bg-white text-zinc-900 dark:bg-zinc-800 dark:text-white">
 
             <flux:sidebar.toggle
                 class="lg:hidden"
+                icon="bars-2"
                 inset="left"
             />
 
@@ -301,18 +321,15 @@
 
             @auth
                 <flux:dropdown position="top" align="end">
-
                     <flux:profile
                         :initials="$user->initials()"
                         icon-trailing="chevron-down"
                     />
 
                     <flux:menu>
-
                         <flux:menu.radio.group>
                             <div class="p-2 text-sm">
                                 <div class="flex items-center gap-2">
-
                                     <flux:avatar
                                         :name="$user->name"
                                         :initials="$user->initials()"
@@ -327,7 +344,6 @@
                                             {{ $user->email }}
                                         </flux:text>
                                     </div>
-
                                 </div>
                             </div>
                         </flux:menu.radio.group>
@@ -354,7 +370,6 @@
                                 Keluar
                             </flux:menu.item>
                         </form>
-
                     </flux:menu>
                 </flux:dropdown>
             @else

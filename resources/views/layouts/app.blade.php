@@ -2,7 +2,9 @@
     <flux:main class="flex min-h-screen flex-col">
 
         {{-- HEADER DESKTOP --}}
-        <header class="hidden lg:flex items-center justify-between border-b border-zinc-200 px-8 py-2 dark:border-zinc-700" style="margin-bottom: 15px;">
+        <header class="hidden lg:flex items-center justify-between border-b border-zinc-200 px-8 py-2 dark:border-zinc-700"
+                style="margin-bottom: 15px;">
+
             <div>
                 <h1 class="text-xl font-semibold text-zinc-900 dark:text-white">
                     {{ $title ?? 'Dashboard' }}
@@ -13,15 +15,25 @@
                 </p>
             </div>
 
-            <div class="text-right">
-                <p class="text-sm font-medium text-zinc-900 dark:text-white">
-                    {{ auth()->user()->name }}
-                </p>
+            @auth
+                <div class="text-right">
+                    <p class="text-sm font-medium text-zinc-900 dark:text-white">
+                        {{ auth()->user()->name }}
+                    </p>
 
-                <p class="text-xs text-zinc-500 dark:text-zinc-400">
-                    {{ ucfirst(auth()->user()->role) }}
-                </p>
-            </div>
+                    <p class="text-xs text-zinc-500 dark:text-zinc-400">
+                        {{ ucfirst(auth()->user()->role) }}
+                    </p>
+                </div>
+            @else
+                <div>
+                    <a href="{{ route('login') }}"
+                       class="text-sm font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400">
+                        Masuk ke Sistem
+                    </a>
+                </div>
+            @endauth
+
         </header>
 
         {{-- KONTEN HALAMAN --}}

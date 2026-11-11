@@ -1,17 +1,33 @@
+
 @props([
     'sidebar' => false,
 ])
 
-@if($sidebar)
-    <flux:sidebar.brand :name="config('app.name', 'Laravel')" {{ $attributes }}>
-        <x-slot name="logo" class="flex aspect-square size-8 items-center justify-center rounded-md bg-accent-content text-accent-foreground">
-            <x-app-logo-icon class="size-5 fill-current text-white dark:text-black" />
+@if ($sidebar)
+    <flux:sidebar.brand
+        :name="config('app.name', 'Laravel')"
+        {{ $attributes }}
+        class="[&_.text-sm.font-medium]:!text-white"
+    >
+        <x-slot name="logo" class="!h-9 !w-9 !min-w-0 !overflow-visible">
+            <img
+                src="{{ asset('images/logo.jpeg') }}"
+                alt="{{ config('app.name', 'Laravel') }}"
+                class="h-full w-full object-contain"
+            />
         </x-slot>
     </flux:sidebar.brand>
 @else
-    <flux:brand :name="config('app.name', 'Laravel')" {{ $attributes }}>
-        <x-slot name="logo" class="flex aspect-square size-8 items-center justify-center rounded-md bg-accent-content text-accent-foreground">
-            <x-app-logo-icon class="size-5 fill-current text-white dark:text-black" />
+    <flux:brand
+        :name="config('app.name', 'Laravel')"
+        {{ $attributes }}
+    >
+        <x-slot name="logo" class="!h-9 !w-9 !min-w-0 !rounded-none !overflow-visible">
+            <img
+                src="{{ asset('images/logo.jpeg') }}"
+                alt="{{ config('app.name', 'Laravel') }}"
+                class="h-full w-full object-contain"
+            />
         </x-slot>
     </flux:brand>
 @endif
