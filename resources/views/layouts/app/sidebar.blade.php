@@ -56,7 +56,7 @@
                         :href="route('home')"
                         :current="request()->routeIs('home')"
                         wire:navigate
-                        class="text-white!"
+                        class="text-white! data-current:bg-white/10! data-current:border-white/10!"
                     >
                         Beranda
                     </flux:sidebar.item>
@@ -72,7 +72,7 @@
                                 'admin.dashboard',
                                 'superadmin.dashboard'
                             )"
-                            class="text-white!"
+                            class="text-white! data-current:bg-white/10! data-current:border-white/10!"
                             wire:navigate
                         >
                             Dashboard
@@ -83,7 +83,7 @@
                         icon="package-search"
                         :href="route('inventaris.index')"
                         :current="request()->routeIs('inventaris.*')"
-                        class="text-white!"
+                        class="text-white! data-current:bg-white/10! data-current:border-white/10!"
                         wire:navigate
                     >
                         Katalog Inventaris
@@ -100,7 +100,7 @@
                             icon="flask-conical"
                             :href="route($role . '.pengambilan-bahan.create')"
                             :current="request()->routeIs($role . '.pengambilan-bahan.*')"
-                            class="text-white!"
+                            class="text-white! data-current:bg-white/10! data-current:border-white/10!"
                             wire:navigate
                         >
                             Pengambilan Bahan
@@ -110,7 +110,7 @@
                             icon="wrench"
                             :href="route($role . '.peminjaman-alat.create')"
                             :current="request()->routeIs($role . '.peminjaman-alat.*')"
-                            class="text-white!"
+                            class="text-white! data-current:bg-white/10! data-current:border-white/10!"
                             wire:navigate
                         >
                             Peminjaman Alat
@@ -120,7 +120,7 @@
                             icon="building"
                             :href="route($role . '.peminjaman-lab.create')"
                             :current="request()->routeIs($role . '.peminjaman-lab.*')"
-                            class="text-white!"
+                            class="text-white! data-current:bg-white/10! data-current:border-white/10!"
                             wire:navigate
                         >
                             Peminjaman Laboratorium
@@ -134,7 +134,7 @@
                             icon="clock"
                             :href="route($role . '.riwayat-transaksi.index')"
                             :current="request()->routeIs($role . '.riwayat-transaksi.*')"
-                            class="text-white!"
+                            class="text-white! data-current:bg-white/10! data-current:border-white/10!"
                             wire:navigate
                         >
                             Riwayat Saya
@@ -153,7 +153,7 @@
                             icon="flask-conical"
                             :href="route('admin.bahan.index')"
                             :current="request()->routeIs('admin.bahan.*')"
-                            class="text-white!"
+                            class="text-white! data-current:bg-white/10! data-current:border-white/10!"
                             wire:navigate
                         >
                             Data Bahan
@@ -163,7 +163,7 @@
                             icon="wrench"
                             :href="route('admin.alat.index')"
                             :current="request()->routeIs('admin.alat.*')"
-                            class="text-white!"
+                            class="text-white! data-current:bg-white/10! data-current:border-white/10!"
                             wire:navigate
                         >
                             Data Alat
@@ -173,7 +173,7 @@
                             icon="boxes"
                             :href="route('admin.unit-alat.index')"
                             :current="request()->routeIs('admin.unit-alat.*')"
-                            class="text-white!"
+                            class="text-white! data-current:bg-white/10! data-current:border-white/10!"
                             wire:navigate
                         >
                             Unit Inventaris
@@ -183,7 +183,7 @@
                             icon="building"
                             :href="route('admin.laboratorium.index')"
                             :current="request()->routeIs('admin.laboratorium.*')"
-                            class="text-white!"
+                            class="text-white! data-current:bg-white/10! data-current:border-white/10!"
                             wire:navigate
                         >
                             Laboratorium
@@ -193,7 +193,7 @@
                             icon="calendar-days"
                             :href="route('admin.jadwal-laboratorium.index')"
                             :current="request()->routeIs('admin.jadwal-laboratorium.*')"
-                            class="text-white!"
+                            class="text-white! data-current:bg-white/10! data-current:border-white/10!"
                             wire:navigate
                         >
                             Jadwal Laboratorium
@@ -207,7 +207,7 @@
                             icon="clipboard-list"
                             :href="route('admin.pengambilan-bahan.index')"
                             :current="request()->routeIs('admin.pengambilan-bahan.*')"
-                            class="text-white!"
+                            class="text-white! data-current:bg-white/10! data-current:border-white/10!"
                             wire:navigate
                         >
                             Pengambilan Bahan
@@ -217,7 +217,7 @@
                             icon="package"
                             :href="route('admin.peminjaman-alat.index')"
                             :current="request()->routeIs('admin.peminjaman-alat.*')"
-                            class="text-white!"
+                            class="text-white! data-current:bg-white/10! data-current:border-white/10!"
                             wire:navigate
                         >
                             Peminjaman Alat
@@ -227,7 +227,7 @@
                             icon="building"
                             :href="route('admin.peminjaman-lab.index')"
                             :current="request()->routeIs('admin.peminjaman-lab.*')"
-                            class="text-white!"
+                            class="text-white! data-current:bg-white/10! data-current:border-white/10!"
                             wire:navigate
                         >
                             Peminjaman Laboratorium
@@ -237,7 +237,7 @@
                             icon="package-check"
                             :href="route('admin.pengembalian-bahan.index')"
                             :current="request()->routeIs('admin.pengembalian-bahan.*')"
-                            class="text-white!"
+                            class="text-white! data-current:bg-white/10! data-current:border-white/10!"
                             wire:navigate
                         >
                             Pengembalian Bahan
@@ -247,7 +247,7 @@
                             icon="undo-2"
                             :href="route('admin.pengembalian-alat.index')"
                             :current="request()->routeIs('admin.pengembalian-alat.*')"
-                            class="text-white!"
+                            class="text-white! data-current:bg-white/10! data-current:border-white/10!"
                             wire:navigate
                         >
                             Pengembalian Alat
@@ -262,7 +262,7 @@
                                 icon="clock"
                                 :href="route('admin.riwayat-transaksi.index')"
                                 :current="request()->routeIs('admin.riwayat-transaksi.*')"
-                                class="text-white!"
+                                class="text-white! data-current:bg-white/10! data-current:border-white/10!"
                                 wire:navigate
                             >
                                 Riwayat Transaksi
@@ -272,7 +272,7 @@
                                 icon="clock"
                                 :href="route('superadmin.riwayat-transaksi.index')"
                                 :current="request()->routeIs('superadmin.riwayat-transaksi.*')"
-                                class="text-white!"
+                                class="text-white! data-current:bg-white/10! data-current:border-white/10!"
                                 wire:navigate
                             >
                                 Riwayat Transaksi

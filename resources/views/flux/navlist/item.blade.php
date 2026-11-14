@@ -32,13 +32,13 @@ $classes = Flux::classes()
         'outline' => match ($accent) {
             true => [
                 'data-current:text-(--color-accent-content) hover:data-current:text-(--color-accent-content)',
-                'data-current:bg-white/[7%] dark:data-current:bg-white/[7%] data-current:border data-current:border-zinc-200 dark:data-current:border-transparent',
+                'data-current:bg-white dark:data-current:bg-white/[7%] data-current:border data-current:border-zinc-200 dark:data-current:border-transparent',
                 'hover:text-zinc-800 dark:hover:text-white dark:hover:bg-white/[7%] hover:bg-zinc-800/5 ',
                 'border border-transparent',
             ],
             false => [
                 'data-current:text-zinc-800 dark:data-current:text-zinc-100 data-current:border-zinc-200',
-                'data-current:bg-white/[7%] dark:data-current:bg-white/10 data-current:border data-current:border-zinc-200 dark:data-current:border-white/10 data-current:shadow-xs',
+                'data-current:bg-white dark:data-current:bg-white/10 data-current:border data-current:border-zinc-200 dark:data-current:border-white/10 data-current:shadow-xs',
                 'hover:text-zinc-800 dark:hover:text-white',
             ],
         },
