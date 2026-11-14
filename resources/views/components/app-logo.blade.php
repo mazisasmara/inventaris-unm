@@ -14,6 +14,7 @@
                 src="{{ asset('images/logo.jpeg') }}"
                 alt="{{ config('app.name', 'Laravel') }}"
                 class="h-full w-full object-contain"
+                style="border-radius: 50%;"
             />
         </x-slot>
     </flux:sidebar.brand>

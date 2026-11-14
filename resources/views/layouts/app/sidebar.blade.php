@@ -33,6 +33,17 @@
             sticky
             collapsible="mobile"
             class="border-e border-white/10! bg-navy! text-white!"
+            style="
+                background-image:
+                    linear-gradient(
+                        rgba(10, 20, 40, 0.55),
+                        rgba(10, 20, 40, 0.75)
+                    ),
+                    url('/images/unmLineBG.jpeg');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            "
         >
 
             {{-- HEADER SIDEBAR --}}
