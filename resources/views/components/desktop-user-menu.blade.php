@@ -5,7 +5,6 @@
         :initials="auth()->user()->initials()"
         icon:trailing="chevrons-up-down"
         data-test="sidebar-menu-button"
-        class="!text-white hover:!bg-white hover:!text-blue-700"
     />
 
     <flux:menu>

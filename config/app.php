@@ -123,4 +123,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'admin_contact_url' => 'https://wa.me/62895324670592?text=Halo%20Admin%20Kampus%2C%20saya%20ingin%20meminta%20bantuan%20terkait%20pembuatan%20akun%20Inventaris%20UNM.',
+
 ];
